@@ -22,7 +22,7 @@ void bfs() {
           for (ll i=0; i<4; i++) {
                ll x1=x+dx[i];
                ll y1=y+dy[i];
-               if (x1>=1 && x1<=n && y1>=1 && y1<=m && !used[x1][y1] && c[x1][y1]!='#') {       // Не посещена и не стена
+               if (x1>=1 && x1<=n && y1>=1 && y1<=m && !used[x1][y1] && c[x1][y1]!='#') {
                     used[x1][y1]=true;
                     d[x1][y1]=d[x][y]+1;
                     q.push({x1,y1});
