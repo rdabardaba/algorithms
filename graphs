@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define f first
+#define s second
+ll const N=1e3+1;
+bool used[N][N];
+char c[N][N];
+ll d[N][N];
+ll dx[4] = {1, -1, 0, 0};
+ll dy[4] = {0, 0, 1, -1};
+pair <ll,ll> st,fs;
+ll n,m;
+void bfs() {
+     queue<pair<ll, ll>> q;
+     q.push(st);
+     used[st.f][st.s] = true;
+     d[st.f][st.s] = 0ll;
+     while (!q.empty()) {
+          auto [x,y]=q.front();
+          q.pop();
+          for (ll i=0; i<4; i++) {
+               ll x1=x+dx[i];
+               ll y1=y+dy[i];
+               if (x1>=1 && x1<=n && y1>=1 && y1<=m && !used[x1][y1] && c[x1][y1]!='#') {       // Не посещена и не стена
+                    used[x1][y1]=true;
+                    d[x1][y1]=d[x][y]+1;
+                    q.push({x1,y1});
+               }
+          }
+     }
+}
+int main() {
+     ios::sync_with_stdio(0);
+     cin.tie(0);
+     cin >> n >> m;
+     for (ll i=1; i<=n; i++) {
+          for (ll j=1; j<=m; j++) {
+               cin >> c[i][j];
+               if (c[i][j]=='S') st={i,j};
+               if (c[i][j]=='E') fs={i,j};
+          }
+     }
+     bfs();
+     if (!used[fs.f][fs.s]) return cout << -1,0;
+     cout << d[fs.f][fs.s];
+}
