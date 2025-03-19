@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+ll const N=1e3+1;
+ll a[N][N];
+bool used[N][N];
+ll sum,n,m;
+void dfs(ll x, ll y) {
+     if (x<1 || x>n || y<1 || y>m) return;
+     if (a[x][y]==0 || used[x][y]) return;
+     used[x][y]=true;
+     dfs(x + 1, y);
+     dfs(x - 1, y);
+     dfs(x, y + 1);
+     dfs(x, y - 1);
+     sum+=a[x][y];
+}
+void solve() {
+     ll mx=0;
+     cin >> n >> m;
+     for (int i=1; i<=n; i++) {
+          for (int j=1; j<=m; j++) {
+               used[i][j]=0;
+               cin >> a[i][j];
+          }
+     }
+     for (int i=1; i<=n; i++) {
+          for (int j=1; j<=m; j++) {
+               if (a[i][j]!=0 && !used[i][j]) {
+                    dfs(i,j);
+                    mx=max(mx,sum);
+                    sum=0;
+               }
+          }
+     }
+     cout << mx << '\n';
+}
+int main() {
+     ios::sync_with_stdio(0);
+     cin.tie(0);
+     ll t;
+     cin >> t;
+     while (t--) {
+          solve();
+     }
+}
