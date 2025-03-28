@@ -4,22 +4,23 @@ using namespace std;
 #define int long long
 #define f first
 #define s second
+#define pb push_back
 #define pii pair<ll,ll>
 ll const N=1e5+1;
 ll const INF=1e17;
+vector<pii> g[N];
 ll dist[N];
-vector <pii> g[N];
 void dijkstra(ll start) {
-     priority_queue<pii, vector<pii>, greater<pii>> pq;
+     priority_queue <pii,vector<pii>,greater<pii>> pq;
      fill(dist,dist+N,INF);
-     pq.push({0,start});
      dist[start]=0;
+     pq.push({0,start});
      while (!pq.empty()) {
           ll d=pq.top().f;
           ll v=pq.top().s;
           pq.pop();
           if (d>dist[v]) continue;
-          for (auto [w, to] : g[v]) {
+          for (auto [w,to]:g[v]) {
                if (dist[v]+w<dist[to]) {
                     dist[to]=dist[v]+w;
                     pq.push({dist[to],to});
@@ -35,12 +36,12 @@ signed main() {
      for (int i=1; i<=m; i++) {
           ll u,v,w;
           cin >> u >> v >> w;
-          g[u].push_back({w,v});
-          g[v].push_back({w,u});
+          g[u].pb({w,v});
+          g[v].pb({w,u});
      }
      dijkstra(1);
      for (int i=1; i<=n; i++) {
-          if (dist[i]==INF) cout << -1 << ' ';
-          cout << dist[i] << ' ';
+          if (dist[i]==INF) cout << "-1 ";
+          else cout << dist[i] << ' ';
      }
 }
